@@ -204,15 +204,11 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t)
    }
    else
    {
-      if (t->tick_time->tm_sec == 0)
+      if (debug_flag == false)
       {
-         if (debug_flag == false)
+         if (t->tick_time->tm_sec == 0)
          {
             display_time(t->tick_time);
-         }
-         else
-         {
-            display_time(&fake_time);
          }
       }
    }
