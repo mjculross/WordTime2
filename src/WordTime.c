@@ -189,11 +189,6 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t)
 
    if (splash_timer > 0)
    {
-      if (splash_timer == 1)
-      {
-         layer_remove_from_parent(&splash_image.layer.layer);
-         bmp_deinit_container(&splash_image);
-      }
 
       splash_timer--;
 
@@ -203,16 +198,21 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t)
       }
       else
       {
-         if (t->tick_time->tm_sec == 0)
+         layer_remove_from_parent(&splash_image.layer.layer);
+         bmp_deinit_container(&splash_image);
+      }
+   }
+   else
+   {
+      if (t->tick_time->tm_sec == 0)
+      {
+         if (debug_flag == false)
          {
-            if (debug_flag == false)
-            {
-               display_time(t->tick_time);
-            }
-            else
-            {
-               display_time(&fake_time);
-            }
+            display_time(t->tick_time);
+         }
+         else
+         {
+            display_time(&fake_time);
          }
       }
    }
