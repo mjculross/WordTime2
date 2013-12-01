@@ -132,6 +132,17 @@ static void handle_deinit(void)
 {
    tick_timer_service_unsubscribe();
    accel_tap_service_unsubscribe();
+
+   text_layer_destroy(line1);
+   text_layer_destroy(line2);
+   text_layer_destroy(line3);
+
+   bitmap_layer_destroy(blockp_layer);
+   gbitmap_destroy(blockp_image);
+
+   bitmap_layer_destroy(splash_layer);
+   gbitmap_destroy(splash_image);
+
    window_destroy(window);
 }  // handle_deinit()
 
@@ -153,6 +164,10 @@ static void handle_init(void)
    window_set_fullscreen(window, true);
    window_stack_push(window, true /* Animated */);
    Layer *window_layer = window_get_root_layer(window);
+
+   blockp_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLOCKP);
+   blockp_layer = bitmap_layer_create(dummy_frame);
+   bitmap_layer_set_bitmap(blockp_layer, blockp_image);
 
    window_set_click_config_provider(window, click_config_provider);
 
@@ -192,8 +207,6 @@ static void handle_init(void)
 
 static void handle_second_tick(struct tm *tick, TimeUnits units_changed)
 {
-   GRect dummy_frame = { {0, 0}, {0, 0} };
-
    if (splash_timer > 0)
    {
       splash_timer--;
@@ -204,20 +217,15 @@ static void handle_second_tick(struct tm *tick, TimeUnits units_changed)
       }
       else
       {
-
          if (show_blockp)
          {
             show_blockp = false;
 
             layer_remove_from_parent(bitmap_layer_get_layer(blockp_layer));
-            bitmap_layer_destroy(blockp_layer);
-            gbitmap_destroy(blockp_image);
          }
          else
          {
             layer_remove_from_parent(bitmap_layer_get_layer(splash_layer));
-            bitmap_layer_destroy(splash_layer);
-            gbitmap_destroy(splash_image);
          }
 
          display_time(tick);
@@ -235,9 +243,6 @@ static void handle_second_tick(struct tm *tick, TimeUnits units_changed)
 
             Layer *window_layer = window_get_root_layer(window);
 
-            blockp_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLOCKP);
-            blockp_layer = bitmap_layer_create(dummy_frame);
-            bitmap_layer_set_bitmap(blockp_layer, blockp_image);
             layer_add_child(window_layer, bitmap_layer_get_layer(blockp_layer));
  
             set_bitmap_image(&blockp_image, blockp_layer, RESOURCE_ID_IMAGE_BLOCKP, GPoint (0, 0));
