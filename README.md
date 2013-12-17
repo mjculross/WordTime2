@@ -8,7 +8,7 @@ NOTE: to allow full use of the buttons, WordTime
    "Settings" on the Pebble), not as a watchface
    . . . it just displays a watchface
 
-Features (v 2.0):
+Features (v 2.2):
 - this app/watchface is based upon the original
   Pebble TextWatch, but modified to meet some
   new requirements as requested by my wife (fix

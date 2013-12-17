@@ -1,3 +1,18 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* *                                                                 * */
+/* *                          WordTime2                              * */
+/* *                                                                 * */
+/* *    A customized version of the Pebble TextWatch for my wife     * */
+/* *                                                                 * */
+/* *                 [ SDK 2.0 compatible version ]                  * */
+/* *                                                                 * */
+/* *                    by Mark J Culross, KD5RXT                    * */
+/* *                                                                 * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
 #include <pebble.h>
 
 #define BUFFER_SIZE 12
@@ -121,7 +136,7 @@ static void down_single_repeating_click_handler(ClickRecognizerRef recognizer, v
 
 static void handle_accel_tap(AccelAxisType axis, int32_t direction)
 {
-   if (debug_flag == 0)
+   if ((debug_flag == 0) && (splash_timer == 0))
    {
       show_blockp = true;
    }
